@@ -1,7 +1,7 @@
 import { serve } from "@hono/node-server";
 import { PrismaClient } from "@prisma/client";
 
-import { createApp } from "./app";
+import { createApp } from "./app.js";
 
 const prisma = new PrismaClient();
 const app = createApp(prisma);
