@@ -16,6 +16,8 @@ export function createApp(prisma: PrismaClient) {
     }),
   );
 
+  app.get("/health", (c) => c.json({ ok: true, service: "admin-demo-api" }));
+
   app.get("/api/health", (c) =>
     c.json({
       ok: true,
