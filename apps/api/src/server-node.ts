@@ -7,7 +7,8 @@ const prisma = new PrismaClient();
 const app = createApp(prisma);
 
 const port = Number(process.env.PORT ?? 3001);
+const hostname = process.env.HOST ?? "0.0.0.0";
 
-console.log(`API (Node) listening on http://localhost:${port}`);
+console.log(`API (Node) listening on http://${hostname}:${port}`);
 
-serve({ fetch: app.fetch, port });
+serve({ fetch: app.fetch, port, hostname });
