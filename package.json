@@ -15,7 +15,7 @@
     "db:push": "npm run db:push -w @admin-demo/api",
     "lint": "npm run lint -w @admin-demo/web",
     "build:panel": "npm run build -w @admin-demo/web && npm run build -w @admin-demo/api",
-    "start:panel": "npm run db:deploy -w @admin-demo/api && npm run start:bun -w @admin-demo/api"
+    "start:panel": "npm run db:deploy -w @admin-demo/api && npm run start:node -w @admin-demo/api"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

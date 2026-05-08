@@ -6,6 +6,5 @@ apps/api/dist
 **/.env
 **/.env.local
 !.env.example
-apps/web/.env.example
 .DS_Store
 *.log
