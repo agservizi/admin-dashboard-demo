@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+apps/web/dist
+apps/api/dist
+**/.env
+**/.env.local
+!.env.example
+apps/web/.env.example
+.DS_Store
+*.log

@@ -1,0 +1,23 @@
+{
+  "name": "admin-dashboard-demo",
+  "private": true,
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,magenta \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "npm run dev -w @admin-demo/api",
+    "dev:web": "npm run dev -w @admin-demo/web",
+    "dev:bun": "concurrently -n api,web -c blue,magenta \"npm run dev:bun -w @admin-demo/api\" \"bun --cwd apps/web run dev\"",
+    "build": "npm run build -w @admin-demo/web && npm run build -w @admin-demo/api",
+    "seed": "npm run seed -w @admin-demo/api",
+    "db:generate": "npm run db:generate -w @admin-demo/api",
+    "db:migrate": "npm run db:migrate -w @admin-demo/api",
+    "db:deploy": "npm run db:deploy -w @admin-demo/api",
+    "db:push": "npm run db:push -w @admin-demo/api",
+    "lint": "npm run lint -w @admin-demo/web",
+    "build:panel": "npm run build -w @admin-demo/web && npm run build -w @admin-demo/api",
+    "start:panel": "npm run db:deploy -w @admin-demo/api && npm run start:bun -w @admin-demo/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

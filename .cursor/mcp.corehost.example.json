@@ -1,0 +1,13 @@
+{
+  "_comment": "Modello Cursor MCP. Copia in ~/.cursor/mcp.json o unisci in Settings → MCP. Verifica sui docs CoreHost il comando pacchetto esatto (es. @corehost/mcp o URL stream). Non committare token."
+  "mcpServers": {
+    "corehost": {
+      "command": "npx",
+      "args": ["-y", "@corehost/mcp"],
+      "env": {
+        "COREHOST_API_URL": "https://TUO-PANNELLO.example/api/v1",
+        "COREHOST_TOKEN": "chk_TUO_TOKEN"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ResourceStatus {
+  active
+  inactive
+  pending
+}
+
+model Resource {
+  id        String           @id @default(uuid()) @db.Uuid
+  name      String
+  status    ResourceStatus   @default(pending)
+  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([createdAt(sort: Desc)])
+  @@index([status])
+  @@map("resources")
+}

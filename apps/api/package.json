@@ -1,0 +1,36 @@
+{
+  "name": "@admin-demo/api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server-node.ts",
+    "dev:bun": "bun --watch src/index.ts",
+    "build": "prisma generate",
+    "bun:bundle": "bun build src/index.ts --outdir dist --target bun",
+    "start:bun": "bun src/index.ts",
+    "start": "bun dist/index.js",
+    "start:node": "node --import tsx src/server-node.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "seed": "tsx prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.1",
+    "@prisma/client": "^6.7.0",
+    "hono": "^4.7.5"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.15.3",
+    "prisma": "^6.7.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.2"
+  }
+}

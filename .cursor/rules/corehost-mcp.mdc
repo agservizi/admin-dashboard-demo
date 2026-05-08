@@ -1,0 +1,21 @@
+---
+description: Deploy e gestione app su CoreHost tramite MCP (obbligatorio se il server è collegato)
+alwaysApply: false
+---
+
+# CoreHost MCP
+
+Se **Cursor mostra il server MCP CoreHost** (es. `corehost`) come **connesso/attivo**:
+
+1. **Non** proporre solo istruzioni manuali CLI per deploy su CoreHost: usa i **tool MCP** esposti da quel server.
+2. Flusso tipico (adatta i nomi dei tool alla versione reale del server):
+   - Verifica pannello / connettività se esiste un tool tipo `panel_status`.
+   - **`create_app`** (o equivalente) con nome coerente col repo, runtime e repo collegato.
+   - Postgres gestito: **`provisionDatabase`** / **`create_database`** + **`link_database_to_app`** se documentato.
+   - **`add_env_var`** per `DATABASE_URL`, `WEB_ORIGIN`, `VITE_API_URL` (build), `NODE_ENV`, `PORT`, ecc.
+   - **`deploy_app`** dopo che codice e ENV sono pronti.
+   - In errore: **`get_app_logs`** (e **`list_apps`** per stato).
+
+3. Se il server CoreHost **non** è nell’elenco MCP o risulta disconnesso, chiedi all’utente di configurarlo (vedi `.cursor/mcp.corehost.example.json` e README «Deploy via CoreHost MCP») e di autenticare il tool se richiesto.
+
+4. **Sicurezza**: non stampare `COREHOST_TOKEN` o segreti in chiaro nel chat; usa variabili d’ambiente già impostate in `mcp.json`.
