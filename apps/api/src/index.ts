@@ -1,7 +1,6 @@
 import { serve, file } from "bun";
 import { PrismaClient } from "@prisma/client";
 import { join } from "node:path";
-import { readdirSync } from "node:fs";
 
 import { createApp } from "./app";
 
@@ -11,19 +10,17 @@ const app = createApp(prisma);
 const port = Number(process.env.PORT ?? 3001);
 const webDist = join(import.meta.dir, "../../web/dist");
 
-// Find the actual JS bundle in assets/ to fix stale index.html references
+// Inject a fetch interceptor that rewrites localhost:PORT API calls to relative URLs.
+// This fixes bundles built with a hardcoded dev API base URL.
+const FETCH_INTERCEPTOR = `<script>
+(function(){var f=window.fetch;window.fetch=function(){var a=[].slice.call(arguments);if(typeof a[0]==='string')a[0]=a[0].replace(/^http:\\/\\/localhost:\\d+/,'');return f.apply(this,a);};})();
+</script>`;
+
 function resolveIndexHtml(): string {
   try {
-    const assets = readdirSync(join(webDist, "assets"));
-    const jsFile = assets.find((f) => f.startsWith("index-") && f.endsWith(".js"));
-    if (!jsFile) return join(webDist, "index.html");
-    const cssFile = assets.find((f) => f.startsWith("index-") && f.endsWith(".css"));
-
-    let html = require("node:fs").readFileSync(join(webDist, "index.html"), "utf8");
-    // Replace any stale JS bundle reference with the actual one
-    html = html.replace(/index-[^"]+\.js/g, jsFile);
-    if (cssFile) html = html.replace(/index-[^"]+\.css/g, cssFile);
-    return html;
+    const { readFileSync } = require("node:fs") as typeof import("node:fs");
+    return readFileSync(join(webDist, "index.html"), "utf8")
+      .replace("</head>", FETCH_INTERCEPTOR + "</head>");
   } catch {
     return "";
   }
