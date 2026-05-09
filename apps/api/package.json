@@ -9,7 +9,7 @@
     "build": "prisma generate && tsc -p tsconfig.build.json",
     "bun:bundle": "bun build src/index.ts --outdir dist --target bun",
     "start:bun": "bun src/index.ts",
-    "start": "bun dist/index.js",
+    "start": "node dist/server-node.js",
     "start:runtime": "node scripts/panel-start.mjs",
     "start:node": "node --import tsx src/server-node.ts",
     "db:generate": "prisma generate",
