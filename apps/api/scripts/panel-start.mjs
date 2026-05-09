@@ -55,7 +55,7 @@ function run(cmd, args) {
   });
 }
 
-const serverJs = path.join(apiRoot, "dist", "server-node.js");
+const serverJs = path.join(apiRoot, "dist", "index.js");
 
 if (!skipMigrate) {
   console.log("[panel-start] prisma migrate deploy (timeout:", migrateMs, "ms)");
@@ -69,9 +69,8 @@ if (!skipMigrate) {
   console.warn("[panel-start] skipping prisma migrate (COREHOST_SKIP_MIGRATE)");
 }
 
-console.log("[panel-start] execPath:", process.execPath);
 console.log("[panel-start] launching", serverJs);
-const node = spawn(process.execPath, [serverJs], {
+const node = spawn("bun", [serverJs], {
   cwd: apiRoot,
   stdio: "inherit",
   env: process.env,
