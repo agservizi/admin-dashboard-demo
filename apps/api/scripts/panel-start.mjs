@@ -1,8 +1,29 @@
 import { spawn } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 
 const apiRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+// Patch index.html to reference the actual JS bundle built by Vite
+try {
+  const webDist = path.join(apiRoot, "..", "web", "dist");
+  const indexPath = path.join(webDist, "index.html");
+  const assetsDir = path.join(webDist, "assets");
+  if (existsSync(indexPath) && existsSync(assetsDir)) {
+    const assets = readdirSync(assetsDir);
+    const jsFile = assets.find((f) => f.startsWith("index-") && f.endsWith(".js"));
+    const cssFile = assets.find((f) => f.startsWith("index-") && f.endsWith(".css"));
+    let html = readFileSync(indexPath, "utf8");
+    if (jsFile) html = html.replace(/index-[^"]+\.js/g, jsFile);
+    if (cssFile) html = html.replace(/index-[^"]+\.css/g, cssFile);
+    writeFileSync(indexPath, html, "utf8");
+    console.log("[panel-start] index.html patched →", jsFile);
+  }
+} catch (e) {
+  console.warn("[panel-start] index.html patch skipped:", e.message);
+}
+
 const migrateMs = Number(process.env.MIGRATE_TIMEOUT_MS ?? 120000);
 const skipMigrate =
   process.env.COREHOST_SKIP_MIGRATE === "1" ||
