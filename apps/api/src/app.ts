@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { serveStatic } from "@hono/node-server/serve-static";
 import type { PrismaClient } from "@prisma/client";
 
 export function createApp(prisma: PrismaClient) {
@@ -90,10 +89,6 @@ export function createApp(prisma: PrismaClient) {
       totalPages: Math.ceil(total / limit),
     });
   });
-
-  const webDistPath = process.env.WEB_DIST_PATH ?? "../web/dist";
-  app.use("/*", serveStatic({ root: webDistPath }));
-  app.use("/*", serveStatic({ root: webDistPath, path: "/index.html" }));
 
   return app;
 }
