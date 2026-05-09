@@ -8,8 +8,8 @@ const prisma = new PrismaClient();
 const app = createApp(prisma);
 
 const port = Number(process.env.PORT ?? 3001);
-// Absolute path to web dist: two levels up from apps/api/src → apps/web/dist
-const webDist = join(import.meta.dir, "../../../web/dist");
+// Absolute path to web dist: from apps/api/src → ../../web/dist = apps/web/dist
+const webDist = join(import.meta.dir, "../../web/dist");
 
 console.log(`API (Bun) listening on http://0.0.0.0:${port}`);
 console.log(`[static] serving frontend from ${webDist}`);
