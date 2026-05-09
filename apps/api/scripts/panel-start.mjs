@@ -48,12 +48,18 @@ if (!skipMigrate) {
   console.warn("[panel-start] skipping prisma migrate (COREHOST_SKIP_MIGRATE)");
 }
 
+console.log("[panel-start] execPath:", process.execPath);
 console.log("[panel-start] launching", serverJs);
 const node = spawn(process.execPath, [serverJs], {
   cwd: apiRoot,
   stdio: "inherit",
   env: process.env,
 });
+node.on("error", (err) => {
+  console.error("[panel-start] server spawn error:", err.message);
+  process.exit(1);
+});
 node.on("exit", (code, signal) => {
+  console.error("[panel-start] server exited code=%s signal=%s", code, signal);
   process.exit(code ?? (signal ? 1 : 0));
 });

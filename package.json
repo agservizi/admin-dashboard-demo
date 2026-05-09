@@ -14,7 +14,7 @@
     "db:deploy": "npm run db:deploy -w @admin-demo/api",
     "db:push": "npm run db:push -w @admin-demo/api",
     "lint": "npm run lint -w @admin-demo/web",
-    "build:panel": "npm run build -w @admin-demo/web && npm run build -w @admin-demo/api",
+    "build:panel": "rm -rf apps/api/dist && npm run build -w @admin-demo/web && npm run build -w @admin-demo/api",
     "start:panel": "npm run start:runtime -w @admin-demo/api"
   },
   "devDependencies": {
